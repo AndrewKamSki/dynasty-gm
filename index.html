@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dynasty GM</title>
+<meta name="description" content="Track your Sleeper dynasty team and get trade ideas for contending or rebuilding.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cellipse cx='16' cy='16' rx='14' ry='9' transform='rotate(-35 16 16)' fill='%230d6b4f'/%3E%3Cpath d='M11 21l10-10M13 15l3 3M15 13l3 3M17 11l3 3' stroke='white' stroke-width='1.6'/%3E%3C/svg%3E">
+</head>
+<body>
+<div class="wrap">
+  <div id="status" class="note" role="status">Loading your league from Sleeper…</div>
+
+  <header>
+    <div>
+      <div class="eyebrow" id="h-eyebrow">&nbsp;</div>
+      <h1 id="h-team">Dynasty GM</h1>
+      <div class="sub" id="h-sub">&nbsp;</div>
+    </div>
+    <div class="hright">
+      <div class="switch" role="group" aria-label="Team direction">
+        <button id="m-contend" aria-pressed="true" data-mode="contend">Contending</button>
+        <button id="m-rebuild" aria-pressed="false" data-mode="rebuild">Rebuilding</button>
+      </div>
+      <div class="hint" id="m-hint"></div>
+    </div>
+  </header>
+
+  <div class="verdict" id="verdict" hidden></div>
+
+  <section class="strip" aria-label="Team summary">
+    <div class="stat"><div class="k">Record</div><div class="v num" id="s-rec">–</div><div class="s" id="s-recs">&nbsp;</div></div>
+    <div class="stat"><div class="k">Points for</div><div class="v num" id="s-pf">–</div><div class="s" id="s-pfs">&nbsp;</div></div>
+    <div class="stat"><div class="k">Dynasty value</div><div class="v num" id="s-val">–</div><div class="s" id="s-vals">&nbsp;</div></div>
+    <div class="stat"><div class="k">Starter age</div><div class="v num" id="s-age">–</div><div class="s" id="s-ages">&nbsp;</div></div>
+    <div class="stat window"><div class="k">Contention window · projected value</div><svg id="win" viewBox="0 0 320 80" role="img" aria-label="Projected roster value by season"></svg></div>
+  </section>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="t-roster" aria-selected="true" data-tab="roster">Roster</button>
+    <button role="tab" id="t-trades" aria-selected="false" data-tab="trades">Trade ideas</button>
+    <button role="tab" id="t-league" aria-selected="false" data-tab="league">League</button>
+    <button role="tab" id="t-settings" aria-selected="false" data-tab="settings">Settings</button>
+  </nav>
+
+  <section id="p-roster" class="grid2">
+    <div class="col">
+      <div class="toolbar">
+        <div class="chips" id="posf"></div>
+        <label class="slot" for="sort">Sort <select id="sort"><option value="value">Value</option><option value="age">Age</option><option value="ppg">Pts/game</option></select></label>
+      </div>
+      <div class="tablebox"><table id="rtab"></table></div>
+    </div>
+    <div class="col">
+      <div class="panel"><h3>Starter strength vs league</h3><div id="posstr"></div><div class="legend">Bar is the value of your starters at each position. The tick is the league median.</div></div>
+      <div class="panel"><h3>Draft picks</h3><div id="picks"></div></div>
+    </div>
+  </section>
+
+  <section id="p-trades" hidden>
+    <div class="toolbar tt">
+      <div class="note" id="tnote"></div>
+      <label class="slot" for="tpartner">Partner <select id="tpartner"><option value="">All teams</option></select></label>
+    </div>
+    <div class="trades" id="trades"></div>
+  </section>
+
+  <section id="p-league" hidden>
+    <div class="tablebox"><table id="ltab"></table></div>
+    <p class="legend">Direction is a guess from record, points scored and how much of each roster's value is in players past their prime.</p>
+  </section>
+
+  <section id="p-settings" hidden>
+    <form class="panel settings" id="sform">
+      <label for="f-user">Sleeper username <input id="f-user" autocomplete="off" spellcheck="false"></label>
+      <label for="f-league">League <select id="f-league"></select></label>
+      <div class="tfoot"><button class="btn primary" id="f-save" type="submit">Load league</button><button class="btn" id="f-refresh" type="button">Refresh data</button></div>
+      <p class="legend" id="f-info"></p>
+    </form>
+  </section>
+
+  <footer class="legend">Data from the <a href="https://docs.sleeper.com/" target="_blank" rel="noopener">Sleeper API</a>. Dynasty values from <a href="https://www.fantasycalc.com/dynasty-rankings" target="_blank" rel="noopener">FantasyCalc</a>, matched to your league's QB format and size.</footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
